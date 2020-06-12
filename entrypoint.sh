@@ -10,7 +10,7 @@ install_zip_dependencies(){
 publish_dependencies_as_layer(){
 	echo "Publishing dependencies as a layer..."
 	local result=$(aws lambda publish-layer-version --layer-name "${INPUT_LAMBDA_FUNCTION_NAME}_layer" --zip-file fileb://dependencies.zip)
-	LAYER_ARN=$(jq '.LayerVersionArn' <<< "$result")
+	LAYER_ARN=$(jq -r '.LayerVersionArn' <<< "$result")
 	rm -rf python
 	rm dependencies.zip
 }
